@@ -8,30 +8,44 @@ class Main {
     System.out.println(majorityElement(temp));
   }
 
-  public static int majorityElement(int[] nums) {
-        Hashtable<Integer, Integer> ht = new Hashtable<Integer, Integer>();
-        for(int i = 0; i < nums.length; i++){
-            if(!ht.contains(nums[i])){
-                ht.put(nums[i], 1);
+ public static ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+        ListNode head = new ListNode();
+        ListNode current1 = list1;
+        ListNode current2 = list2;
+        
+        if(list1.val > list2.val){
+            head.val = list2.val;
+            current2 = current2.next;
+        }
+        else{
+            head.val = list1.val;
+            current1 = current1.next;
+        }
+        
+        ListNode current = new ListNode();
+        head.next = current;
+        
+        while(current1 != null){
+            if(current2 != null && current1.val > current2.val){
+                current.val = current2.val;
+                current2 = current2.next;
+                current.next = new ListNode();
+                current = current.next;
+                System.out.println("current2");
             }
             else{
-              System.out.println("gone");
-              int tem = ht.get(nums[i])+1;
-                ht.put(nums[i], ht.get(tem));
+                current.val = current1.val;
+                current1 = current1.next;
+                current.next = new ListNode();
+                current = current.next;
+                System.out.println("current1");
             }
         }
-        int num = 0;
-        int max = 0;
-        
-        Enumeration<Integer> iter = ht.keys();
-        
-        while(iter.hasMoreElements()){
-            int check = iter.nextElement();
-            if(ht.get(check) > max){
-                max = ht.get(check);
-                num = check;
-            }
+        if(current2 != null){
+            current = current2;
         }
-        return num;
+        return head;
+        
+        
     }
 }
